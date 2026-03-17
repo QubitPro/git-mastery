@@ -243,4 +243,97 @@ git push -u origin practice/rebase
 
 > **Key Insight:** Interactive rebase is about **crafting your story**. Your commits are a narrative of what you built and why. Rebase lets you edit that narrative before sharing it — remove the false starts, combine the small steps, and present clean, logical changes.
 
+---
+
+## ASCII Workflow — Day 02 Visual Summary
+
+```
+                        DAY 02 OVERVIEW
+  ┌─────────────────────────────────────────────────────────┐
+  │                                                         │
+  │   SQUASH — Combine messy commits into one               │
+  │   ═══════                                               │
+  │                                                         │
+  │   BEFORE:                        AFTER:                 │
+  │   ┌──────────────────┐           ┌──────────────────┐   │
+  │   │ ○ done i think   │           │                  │   │
+  │   │ ○ forgot this    │           │                  │   │
+  │   │ ○ typo fix       │ squash   │                  │   │
+  │   │ ○ more stuff     │────────▶ │ ● feat(test):    │   │
+  │   │ ○ WIP            │           │   add rebase     │   │
+  │   │ ○ add file       │           │   exercise file  │   │
+  │   └──────────────────┘           └──────────────────┘   │
+  │   6 ugly commits                 1 clean commit         │
+  │                                                         │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │   REWORD — Fix a commit message                         │
+  │   ═══════                                               │
+  │                                                         │
+  │   ○ "bad mesage typo"  ──reword──▶  ○ "docs(test):     │
+  │   ○ "second commit"                   add reword        │
+  │                                       practice file"    │
+  │                                     ○ "second commit"   │
+  │                                                         │
+  │   Only the MESSAGE changes. Code stays the same.        │
+  │                                                         │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │   DROP — Delete a commit from history                   │
+  │   ════                                                  │
+  │                                                         │
+  │   BEFORE:                        AFTER:                 │
+  │   ┌──────────────────┐           ┌──────────────────┐   │
+  │   │ ○ feat: more     │           │ ○ feat: more     │   │
+  │   │ ○ debug: garbage │──drop──▶ │   (gone!)         │   │
+  │   │ ○ feat: useful   │           │ ○ feat: useful   │   │
+  │   └──────────────────┘           └──────────────────┘   │
+  │                                                         │
+  │   ⚠ May cause MERGE CONFLICTS if later commits         │
+  │     depend on the dropped commit's changes!             │
+  │                                                         │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │   THE INTERACTIVE REBASE EDITOR                         │
+  │   ═════════════════════════════                          │
+  │                                                         │
+  │   git rebase -i HEAD~6  opens:                          │
+  │   ┌──────────────────────────────────────┐              │
+  │   │ pick   abc1234 add file              │              │
+  │   │ squash def5678 WIP          ◀── change these        │
+  │   │ squash ghi9012 more stuff            │              │
+  │   │ squash jkl3456 typo fix              │              │
+  │   │ squash mno7890 forgot this           │              │
+  │   │ squash pqr1234 done i think          │              │
+  │   └──────────────────────────────────────┘              │
+  │                                                         │
+  │   pick ── keep as-is      reword ── edit message        │
+  │   squash ─ merge up       fixup ─── merge, drop msg     │
+  │   drop ── delete          edit ──── pause to modify     │
+  │                                                         │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │   SAFETY NET                                            │
+  │   ══════════                                            │
+  │                                                         │
+  │   Something went wrong?                                 │
+  │   ┌────────────────────────┐                            │
+  │   │ git rebase --abort     │ ◀── undo everything        │
+  │   └────────────────────────┘                            │
+  │                                                         │
+  │   Already finished and regret it?                       │
+  │   ┌────────────────────────┐                            │
+  │   │ git reflog             │ ◀── find old commits       │
+  │   └────────────────────────┘     (Day 04)               │
+  │                                                         │
+  │   About to do something risky?                          │
+  │   ┌────────────────────────────────────┐                │
+  │   │ git branch backup-before-rebase    │ ◀── save copy  │
+  │   └────────────────────────────────────┘                │
+  │                                                         │
+  │   ⚠ NEVER rebase commits already pushed + shared!       │
+  │                                                         │
+  └─────────────────────────────────────────────────────────┘
+```
+
 **Next → [Day 03: Stash + Cherry-Pick](day-03-stash-and-cherrypick.md)**
